@@ -15,17 +15,6 @@ shinyServer(function(input, output) {
         browser()
     })
     
-    # output$predVals <- c("Number of Cylinders" = "cyl",
-    #     "Engine Displacement" = "disp",
-    #     "Engine Horsepower" = "hp",
-    #     "Final Drive Ratio" = "drat",
-    #     "Vehicle Weight" = "wt",
-    #     "1/4-Mile Elapsed Time" = "qsec",
-    #     "Engine Cylinder Arrangment" = "vs",
-    #     "Auto/Manual Transmission" = "am",
-    #     "Number of Forward Gears" = "gear",
-    #     "Number of Carburetors" = "carb")
-    
     predLookup <- c("cyl" = "Number of Cylinders",
                     "disp" = "Engine Displacement",
                     "hp" = "Engine Horsepower",
@@ -64,5 +53,25 @@ shinyServer(function(input, output) {
         plot(model1(), which = 5)
         plot(model1(), which = 6)
     })
-
+    
+    ## Add Sliders for Each Checked Box
+    output$predSliders = renderUI({
+        out <- vector(mode = "list", length = 0)
+        for(p in names(predLookup)) {
+            if (any(input$predictors == p)) {
+                out[[p]] <- sliderInput(
+                        paste("slider", p),
+                        predLookup[p],
+                        min = min(mtcars[[p]]),
+                        max = max(mtcars[[p]]),
+                        value = min(mtcars[[p]])
+                )
+            }
+        }
+        if(is.null(out)){
+            out <- renderText("Select Predictors to Select Their Values")
+        }
+        return(out)
+    })
 })
+    

@@ -42,16 +42,10 @@ shinyUI(fluidPage(
                                  h3("Coefficients and Accuracy"),
                                  verbatimTextOutput("smry")),
                         tabPanel("Diagnostics", br(),
-                                 plotOutput("plot1"))
-                        # tabPanel("Predictions", br(),
-                                 # conditionalPanel(
-                                 #     condition = "input.predictors == 'disp'",
-                                 #     sliderInput("dispSlide", "Engine Displacment", 
-                                 #                 min = min(mtcars$disp), 
-                                 #                 max = max(mtcars$disp),
-                                 #                 value = min(mtcars$disp))
-                                 # ),
-
+                                 plotOutput("plot1")),
+                        tabPanel("Predictions", br(),
+                                 uiOutput("predSliders")
+                        )
             )
         )
     )
