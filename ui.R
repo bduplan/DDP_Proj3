@@ -7,6 +7,8 @@
 #    http://shiny.rstudio.com/
 #
 
+## https://bduplan.shinyapps.io/DDP_Proj3/
+
 library(shiny)
 
 # Define UI for application that draws a histogram
@@ -18,6 +20,14 @@ shinyUI(fluidPage(
     # Sidebar with a slider input for number of bins
     sidebarLayout(
         sidebarPanel(
+            h3("Instructions"),
+            tags$ol(
+                tags$li("Select predictors"),
+                tags$li("View model summary tab"),
+                tags$li("View diagnostic plot tab"),
+                tags$li("Alter predictor selection, if desired"),
+                tags$li("Predict MPG based on user inputs in prediciton tab")
+            ),
             h3("Select Predictors"),
             checkboxGroupInput("predictors", "Predictors", 
                                c("Number of Cylinders" = "cyl",
