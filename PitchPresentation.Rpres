@@ -1,0 +1,45 @@
+Model Fitting GUI Pitch
+========================================================
+author: Bernie Duplan
+date: 9/8/20
+autosize: false
+
+Fitting a Model to Motor Trend Fuel Consumption Data
+========================================================
+
+The emedded dataset, mtcars, in R is commonly used for beginners learning to use the software.  Throughout our studies, we become quite familiar with the dataset and ways which we can view, manipulate, and fit models to it.
+
+Motivated by a recent class project in which we determined which predictors produced significant improvements in model fit, in this project I reated a convenient Graphical User Interface with which to explore and fit the data.
+
+The Predictors
+========================================================
+
+This dataset includes 32 observations of 11 variables.  If we use the dataset to predict fuel comsumption (mpg), that leaves 10 predictors with which to model.  This pairs plot shows the interactions that the variables had with each other.
+
+```{r}
+pairs(mtcars)
+```
+
+The GUI includes these helpful features:
+========================================================
+
+- Easy selection and deselection of predictors
+- A quick summary of a linear model using the selected predictors
+- Diagnostic plots to help the user determine which predictors are best suited
+- A prediction interface complete with sliders to apply the current model to given inputs
+
+```{r, echo = FALSE}
+fit <- lm(mpg ~ wt + hp, data = mtcars)
+summary(fit)
+```
+
+Quickly Make Changes and Observe Effect on Model
+========================================================
+
+While on the diagnostic plot tab, you can quickly include/exclude predictors and observe the resulting effect on residual and leverage plots.  No more altering lines of code!
+
+```{r echo = FALSE}
+par(mfrow = c(1, 2))
+plot(fit, which = 2)
+plot(fit, which = 3)
+```
