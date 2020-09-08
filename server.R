@@ -8,12 +8,14 @@
 #
 
 library(shiny)
+library(DT)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
-    observeEvent(input$browser,{
-        browser()
-    })
+
+    # observeEvent(input$browser,{
+    #     browser()
+    # })
     
     predLookup <- c("cyl" = "Number of Cylinders",
                     "disp" = "Engine Displacement",
@@ -55,23 +57,42 @@ shinyServer(function(input, output) {
     })
     
     ## Add Sliders for Each Checked Box
-    output$predSliders = renderUI({
+    output$predSliders <- renderUI({
         out <- vector(mode = "list", length = 0)
         for(p in names(predLookup)) {
             if (any(input$predictors == p)) {
+                if(p == "cyl") {step <- 2} 
+                else if (p == "vs" || p == "am" || p == "gear" || p == "carb") {
+                    step <- 1
+                }
+                else {step <- NULL}
                 out[[p]] <- sliderInput(
-                        paste("slider", p),
+                        paste0("slider_", p),
                         predLookup[p],
                         min = min(mtcars[[p]]),
                         max = max(mtcars[[p]]),
-                        value = min(mtcars[[p]])
+                        value = min(mtcars[[p]]),
+                        step = step
                 )
             }
         }
         if(is.null(out)){
             out <- renderText("Select Predictors to Select Their Values")
         }
+        
         return(out)
     })
+    
+    ## Predict MPG based on the given inputs
+    pred1 <- reactive({
+        sliderVals <- lapply(input$predictors, 
+                             function(x){input[[paste0("slider_", x)]]})
+        sliderVals <- as.data.frame(sliderVals)
+        names(sliderVals) <- input$predictors
+
+        predict(model1(), sliderVals, interval = "confidence")
+    })
+    
+    output$predMPG <- renderTable(pred1())
 })
     
