@@ -9,7 +9,7 @@ Fitting a Model to Motor Trend Fuel Consumption Data
 
 The emedded dataset, mtcars, in R is commonly used for beginners learning to use the software.  Throughout our studies, we become quite familiar with the dataset and ways which we can view, manipulate, and fit models to it.
 
-Motivated by a recent class project in which we determined which predictors produced significant improvements in model fit, in this project I reated a convenient Graphical User Interface with which to explore and fit the data.
+Motivated by a recent class project in which we determined which predictors produced significant improvements in model fit, in this project I created a convenient Graphical User Interface with which to explore and fit the data.
 
 The Predictors
 ========================================================
